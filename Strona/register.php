@@ -10,8 +10,10 @@
 
     if(isset($_POST["name"]) && isset($_POST["login"]) && isset($_POST["password"]) &&
     !empty($_POST["name"]) && !empty($_POST["login"]) && !empty($_POST["password"]) ){
-        $sql = "";
-        $db 
+        $sql = "INSERT INTO `account` (`id`, `name`, `login`, `password`, `is_admin`) VALUES (NULL, '".$_POST["name"]."', '".$_POST["login"]."', '".md5($_POST["password"])."', '0');";
+        $db->query($sql);
+        $db->close();
+        header('Location: index.php');
     }
 
     echo "
