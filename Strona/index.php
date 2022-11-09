@@ -52,16 +52,45 @@
         echo "<h1>".$name."</h1>";
 
 
-        $sql = "SELECT `name`, `price` FROM `item` WHERE `seller` =".$_COOKIE["userID"].";";
+        $sql = "SELECT `id`, `name`, `price`, `buyer` FROM `item` WHERE `seller` =".$_COOKIE["userID"].";";
         $res = $db->query($sql);
-        echo "<h3>Twoje oferty: </h3>";
+        echo "<h3>Twoje oferty wszystkie oferty: </h3>";
         if(mysqli_num_rows($res) == 0){
             echo "Nie masz jeszcze zadnych ofert!";
         }
         else{
             echo "<ol>";
             while($row = $res->fetch_assoc()){
-                echo "<li>".$row["name"]." : ".$row["price"]."PLN</li>";
+                echo "<li><a href='offer.php?item=".$row["id"]."'>".$row["name"]."</a> : ".$row["price"]."PLN".($row["buyer"] != NULL ? "  :  Kupione" : "")."</li>";
+            }
+            echo "</ol>";
+        }
+
+        $sql = "SELECT `id`, `name`, `price`, `buyer` FROM `item` WHERE `buyer` =".$_COOKIE["userID"].";";
+        $res = $db->query($sql);
+        echo "<h3>Twoje wszystkie kupione: </h3>";
+        if(mysqli_num_rows($res) == 0){
+            echo "Nic nie kupiles!";
+        }
+        else{
+            echo "<ol>";
+            while($row = $res->fetch_assoc()){
+                echo "<li><a href='offer.php?item=".$row["id"]."'>".$row["name"]."</a> : ".$row["price"]."PLN</li>";
+            }
+            echo "</ol>";
+        }
+
+
+        $sql = "SELECT `id`, `name`, `price` FROM `item` WHERE `buyer` is null;";
+        $res = $db->query($sql);
+        echo "<h3>Wszystkie oferty: </h3>";
+        if(mysqli_num_rows($res) == 0){
+            echo "Nie ma nic do kupienia!";
+        }
+        else{
+            echo "<ol>";
+            while($row = $res->fetch_assoc()){
+                echo "<li><a href='offer.php?item=".$row["id"]."'>".$row["name"]."</a> : ".$row["price"]."PLN</li>";
             }
             echo "</ol>";
         }

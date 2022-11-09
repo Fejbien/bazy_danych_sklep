@@ -14,20 +14,37 @@
         echo "<p>Description: ".$offer["description"]."</p>";
         echo "<p>Offered at: ".$offer["created_at"]."</p>";
         echo "<p>Seller: ".$offer["seller_name"]."</p>";
+        if($offer["buyer_name"] != null && $offer["sold_at"] != null){
+            echo "<p>Buyer: ".$offer["buyer_name"]."</p>";
+            echo "<p>Bought at: ".$offer["sold_at"]."</p>";
+        }
     }
 
     $db = new mysqli("localhost", "root", "", "shop");
 
     if(!isset($_COOKIE["userID"])){
+        echo "<a href='index.php'>Powrot</a>";
         echo "<h1>Nie jestesc zalogowany zaloguj sie!</h1>";
         showItem($db);
     }
     else{
         $sql = "SELECT `name` FROM `account` WHERE `id`=" . $_COOKIE["userID"] . ";";
-        $name = $db->query($sql)->fetch_assoc()["name"];    
+        $name = $db->query($sql)->fetch_assoc()["name"]; 
+        echo "<a href='index.php'>Powrot</a>";
         echo "<h1>" . $name . "</h1>";
-
         showItem($db);
+
+        $sql = "SELECT `seller`, `buyer` FROM `item` WHERE `id`=".$_GET["item"].";";
+        $info = $db->query($sql)->fetch_assoc();    
+        if($_COOKIE["userID"] == $info["seller"] && $info["buyer"] == NULL){
+            echo "<a href='edit.php?item=".$_GET["item"]."'>Edytuj</a>";
+        }
+        else{
+            echo "<form>";
+            echo "NIE dodane jeszcze zakup :)";
+            echo "</form>";
+            
+        }
     }
 
     $db->close();
