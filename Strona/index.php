@@ -23,18 +23,20 @@
 
         echo "
             <form method='POST' action='index.php'>
-                <input type='text' name='login'>
-                <input type='password' name='password'>
+                <label>Login</label><input type='text' name='login'></br>
+                <label>Haslo</label><input type='password' name='password'></br>
                 <input type='submit' value='Zaloguj'>
             </form>
         ";
 
-        // Odlogowywanie sie
+        echo "<a href='register.php'>Zarejestruj sie!</a>";
+
+        // Odlogowywanie sie bedzie za niedluop
         //setcookie("userID", NULL);
         //header('Location: index.php');
     }
     else{
-
+        
     }
 
     $db->close();
