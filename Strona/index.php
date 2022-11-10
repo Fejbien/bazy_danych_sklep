@@ -51,12 +51,18 @@
 
         echo "<h1>".$name."</h1>";
 
+        echo "
+            <form method='POST' action='add.php'>
+                <input type='submit' value='Dodaj oferte'>
+            </form>
+        ";
+
 
         $sql = "SELECT `id`, `name`, `price`, `buyer` FROM `item` WHERE `seller` =".$_COOKIE["userID"].";";
         $res = $db->query($sql);
-        echo "<h3>Twoje oferty wszystkie oferty: </h3>";
+        echo "<h3>Twoje wyszystkie wystwione oferty: </h3>";
         if(mysqli_num_rows($res) == 0){
-            echo "Nie masz jeszcze zadnych ofert!";
+            echo "Nie masz jeszcze zadnych wystawionych ofert!";
         }
         else{
             echo "<ol>";
@@ -81,9 +87,9 @@
         }
 
 
-        $sql = "SELECT `id`, `name`, `price` FROM `item` WHERE `buyer` is null;";
+        $sql = "SELECT `id`, `name`, `price` FROM `item` WHERE `buyer` is null AND `seller` !='".$_COOKIE['userID']."';";
         $res = $db->query($sql);
-        echo "<h3>Wszystkie oferty: </h3>";
+        echo "<h3>Wszystkie oferty mozliwe do kupna: </h3>";
         if(mysqli_num_rows($res) == 0){
             echo "Nie ma nic do kupienia!";
         }

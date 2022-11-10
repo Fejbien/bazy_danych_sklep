@@ -40,10 +40,10 @@
             echo "<a href='edit.php?item=".$_GET["item"]."'>Edytuj</a>";
         }
         else{
-            echo "<form>";
-            echo "NIE dodane jeszcze zakup :)";
+            echo "<form method='POST' action='buy.php'>";
+            echo "  <input type='hidden' name='item' value='".$_GET["item"]."'>";
+            echo "  <input type='submit' value='Kup'>";
             echo "</form>";
-            
         }
     }
 
