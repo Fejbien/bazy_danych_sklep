@@ -40,10 +40,14 @@
             echo "<a href='edit.php?item=".$_GET["item"]."'>Edytuj</a>";
         }
         else{
-            echo "<form method='POST' action='buy.php'>";
-            echo "  <input type='hidden' name='item' value='".$_GET["item"]."'>";
-            echo "  <input type='submit' value='Kup'>";
-            echo "</form>";
+            $sql = "SELECT `buyer` FROM `item` WHERE `id`='".$_GET["item"]."';";
+            $buyer = $db->query($sql)->fetch_assoc()["buyer"];
+            if($buyer==NULL){
+                echo "<form method='POST' action='buy.php'>";
+                echo "  <input type='hidden' name='item' value='".$_GET["item"]."'>";
+                echo "  <input type='submit' value='Kup'>";
+                echo "</form>";
+            }
         }
     }
 
