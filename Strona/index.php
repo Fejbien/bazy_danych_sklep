@@ -100,6 +100,20 @@
             }
             echo "</ol>";
         }
+
+        $sql = "SELECT `id`, `name`, `price`, `buyer` FROM `item` WHERE 1;";
+        $res = $db->query($sql);
+        echo "<h3>Wszystkie oferty ktore sa lub byly na stronie </h3>";
+        if(mysqli_num_rows($res) == 0){
+            echo "Nie ma zadnych!";
+        }
+        else{
+            echo "<ol>";
+            while($row = $res->fetch_assoc()){
+                echo "<li><a href='offer.php?item=".$row["id"]."'>".$row["name"]."</a> : ".$row["price"]."PLN".($row["buyer"] != NULL ? "  :  Kupione" : "")."</li>";
+            }
+            echo "</ol>";
+        }
     }
 
     $db->close();
